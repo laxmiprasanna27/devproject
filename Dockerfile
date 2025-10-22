@@ -1,20 +1,6 @@
-# Use an official Python base image
-FROM python:3.11-slim
-
-# Set working directory
-WORKDIR /app
-
-# Copy dependency file first
-COPY requirements.txt .
-
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy project files
-COPY . .
-
-# Expose Flask port
+FROM python:3.9-slim-buster
+WORKDIR /App
+COPY . /App
+RUN pip install --no-cache-dir -r requiremnts.txt
 EXPOSE 5000
-
-# Run the application
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["python","app.py"]
