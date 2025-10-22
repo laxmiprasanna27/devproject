@@ -1,55 +1,38 @@
-pipeline {
+pipeline{
     agent any
-
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        DOCKER_IMAGE = "your-dockerhub-username/temperature-converter"
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/yourusername/temperature-converter.git'
+    stages{
+        stage("Build Docker image"){
+            steps{
+                echo "Build Docker image"
+                bat "docker build -t kubdemoapp:v1 ."
             }
         }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $DOCKER_IMAGE:latest .'
+        stage("Docker Login"){
+            steps{
+                bat "docker login -u laxmiprasanna11 -p laxmiprasanna@11"
             }
         }
-
-        stage('Push to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials-id', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh '''
-                    echo "$PASS" | docker login -u "$USER" --password-stdin
-                    docker push $DOCKER_IMAGE:latest
-                    '''
-                }
+        stage("push Docker image to docker hub"){
+            steps{
+                echo "push Docker image to docker hub"
+                bat "docker tag kubdemoapp:v1 laxmiprasanna11/case_study:t2"
+                bat "docker push laxmiprasanna11/case_study"
             }
         }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh '''
-                kubectl apply -f deployment.yaml
-                kubectl apply -f service.yaml
-                '''
+        stage("Deploy to kubernetes"){
+            steps{
+                echo "Deploy to kubernetes"
+                bat "kubectl apply -f deployment.yaml --validate=false"
+                bat "kubectl apply -f service.yaml"
             }
         }
     }
-
-    triggers {
-        githubPush()
-    }
-
-    post {
-        success {
-            echo '✅ Deployment Successful!'
+    post{
+        success{
+            echo "Pipeline executed successfully"
         }
-        failure {
-            echo '❌ Deployment Failed!'
+        failure{
+            echo "pipeline failed.Please check the logs"
         }
     }
 }
