@@ -1,21 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: temperature-converter
-  labels:
-    app: temperature-converter
+  name: temperature_converter-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: temperature-converter
+      app: temperature_converter
   template:
     metadata:
       labels:
-        app: temperature-converter
+        app: temperature_converter
     spec:
       containers:
-        - name: temperature-converter
-          image: your-dockerhub-username/temperature-converter:latest
+        - name: temperature_converter
+          image: laxmiprasanna11/case_study:t2 # use your Docker Hub image
           ports:
             - containerPort: 5000
