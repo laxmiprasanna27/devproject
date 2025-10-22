@@ -4,7 +4,7 @@ pipeline{
         stage("Build Docker image"){
             steps{
                 echo "Build Docker image"
-                bat "docker build -t kubdemoapp:v1 ."
+                bat "docker build -t temperature_converter:v1 ."
             }
         }
         stage("Docker Login"){
@@ -15,7 +15,7 @@ pipeline{
         stage("push Docker image to docker hub"){
             steps{
                 echo "push Docker image to docker hub"
-                bat "docker tag kubdemoapp:v1 laxmiprasanna11/case_study:t2"
+                bat "docker tag temperature_converter:v1 laxmiprasanna11/case_study:t2"
                 bat "docker push laxmiprasanna11/case_study"
             }
         }
