@@ -4,7 +4,7 @@ pipeline {
         stage("Build Docker image") {
             steps {
                 echo "Build Docker image"
-                bat "docker build -t  break-reminder:v1 ."
+                bat "docker build -t  weight-cal:v1 ."
             }
         }
         stage("Docker Login") {
@@ -15,8 +15,8 @@ pipeline {
         stage("push Docker image to docker hub") {
             steps {
                 echo "push Docker image to docker hub"
-                bat "docker tag  break-reminder:v1 laxmiprasanna11/case_study:t2"
-                bat "docker push laxmiprasanna11/case_study:t2"
+                bat "docker tag   weight-cal:v1 laxmiprasanna11/case_studys:t4"
+                bat "docker push laxmiprasanna11/case_studys:t4"
             }
         }
         stage("Deploy to kubernetes") {
