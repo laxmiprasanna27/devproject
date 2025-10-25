@@ -1,19 +1,20 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  break-reminder-deployment
+  name:  weight-cal-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app:  break-reminder
+      app:  weight-cal
   template:
     metadata:
       labels:
-        app:  break-reminder
+        app:  weight-cal
     spec:
       containers:
-        - name:  break-reminder
-          image: laxmiprasanna11/case_study:t2 # use your Docker Hub image
+        - name:  weight-cal
+          image: laxmiprasanna11/case_studys:t4 # use your Docker Hub image
           ports:
             - containerPort: 5000
