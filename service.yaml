@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  break-reminder-service
+  name:  weight-cal-service
 spec:
   selector:
-    app: break-reminder
+    app: weight-cal
   ports:
     - protocol: TCP
       port: 5000
